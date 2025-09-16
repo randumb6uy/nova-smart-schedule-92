@@ -60,8 +60,20 @@ const Login = () => {
 
   const fillDemoCredentials = (demoRole: UserRole) => {
     setRole(demoRole);
-    setEmail(`${demoRole}1@novatech.edu`);
-    setPassword('password123');
+    switch(demoRole) {
+      case 'admin':
+        setEmail('admin@demo.com');
+        setPassword('admin123');
+        break;
+      case 'faculty':
+        setEmail('faculty@demo.com');
+        setPassword('faculty123');
+        break;
+      case 'student':
+        setEmail('student@demo.com');
+        setPassword('student123');
+        break;
+    }
   };
 
   return (
@@ -183,8 +195,55 @@ const Login = () => {
               </Button>
             </form>
 
-            {/* Demo Credentials Toggle */}
+            {/* Demo Credentials Section */}
             <div className="border-t pt-4">
+              <div className="mb-4">
+                <h3 className="text-sm font-semibold text-nova-navy mb-2">Demo Credentials</h3>
+                <div className="space-y-2 text-sm">
+                  <div className="p-2 bg-muted rounded-md">
+                    <p className="font-medium">Admin Login:</p>
+                    <p>Email: admin@demo.com</p>
+                    <p>Password: admin123</p>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="mt-1 w-full"
+                      onClick={() => fillDemoCredentials('admin')}
+                    >
+                      Fill Admin Credentials
+                    </Button>
+                  </div>
+                  <div className="p-2 bg-muted rounded-md">
+                    <p className="font-medium">Faculty Login:</p>
+                    <p>Email: faculty@demo.com</p>
+                    <p>Password: faculty123</p>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="mt-1 w-full"
+                      onClick={() => fillDemoCredentials('faculty')}
+                    >
+                      Fill Faculty Credentials
+                    </Button>
+                  </div>
+                  <div className="p-2 bg-muted rounded-md">
+                    <p className="font-medium">Student Login:</p>
+                    <p>Email: student@demo.com</p>
+                    <p>Password: student123</p>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="mt-1 w-full"
+                      onClick={() => fillDemoCredentials('student')}
+                    >
+                      Fill Student Credentials
+                    </Button>
+                  </div>
+                </div>
+              </div>
               <button
                 type="button"
                 onClick={() => setShowDemoCredentials(!showDemoCredentials)}

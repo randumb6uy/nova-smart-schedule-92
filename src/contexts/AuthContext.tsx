@@ -18,46 +18,43 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Demo users for prototype
-const demoUsers: Record<string, User> = {
-  'admin1@novatech.edu': {
-    id: '1',
-    email: 'admin1@novatech.edu',
-    role: 'admin',
-    name: 'Dr. Sarah Johnson'
-  },
-  'faculty1@novatech.edu': {
-    id: '2',
-    email: 'faculty1@novatech.edu',
-    role: 'faculty',
-    name: 'Prof. Michael Chen'
-  },
-  'student1@novatech.edu': {
-    id: '3',
-    email: 'student1@novatech.edu',
-    role: 'student',
-    name: 'Alex Rivera'
-  }
-};
+const API_URL = 'http://localhost:5000/api';
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
   const login = async (email: string, password: string, role: UserRole): Promise<boolean> => {
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const foundUser = demoUsers[email];
-    
-    if (foundUser && password === 'password123' && foundUser.role === role) {
-      setUser(foundUser);
+    try {
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        return false;
+      }
+
+      const data = await response.json();
+      
+      if (data.user.role !== role) {
+        return false;
+      }
+
+      // Store token in localStorage
+      localStorage.setItem('token', data.token);
+      setUser(data.user);
       return true;
+    } catch (error) {
+      console.error('Login error:', error);
+      return false;
     }
-    
-    return false;
   };
 
   const logout = () => {
+    localStorage.removeItem('token');
     setUser(null);
   };
 
