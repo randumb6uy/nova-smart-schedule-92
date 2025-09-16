@@ -17,11 +17,14 @@ RUN npm install
 COPY tsconfig.server.json ./
 COPY src/ ./src/
 
+# Create dist directory structure
+RUN mkdir -p dist/server
+
 # Build the application
 RUN npx tsc -p tsconfig.server.json
 
-# Verify the dist folder exists and contains the built files
-RUN ls -la dist/server/
+# List contents of dist directory to verify build
+RUN ls -la dist/ && ls -la dist/server/
 
 # Expose port
 EXPOSE 5000
