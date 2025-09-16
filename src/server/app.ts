@@ -25,11 +25,25 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
+// Health check endpoint
+app.get('/', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'Server is running' });
+});
+
 // Connect to MongoDB
 import { connectDB } from './db';
 
+let isConnected = false;
+
+// Start server first
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+// Then connect to MongoDB
 connectDB()
   .then(() => {
+    isConnected = true;
     console.log('Connected to MongoDB');
     
     // Start the server only after successful DB connection

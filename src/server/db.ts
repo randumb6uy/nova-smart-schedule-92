@@ -15,12 +15,17 @@ export const connectDB = async () => {
       retryWrites: true,
       retryReads: true,
       maxPoolSize: 50,
-      serverSelectionTimeoutMS: 5000,
+      serverSelectionTimeoutMS: 30000, // Increased timeout
       socketTimeoutMS: 45000,
       family: 4,
       ssl: process.env.NODE_ENV === 'production'
     });
     console.log('MongoDB connected successfully');
+
+    mongoose.connection.on('disconnected', () => {
+      console.log('MongoDB disconnected! Reconnecting...');
+      setTimeout(connectDB, 5000); // Try to reconnect after 5 seconds
+    });
     
     // Create demo users on successful connection
     const User = mongoose.model('User');
