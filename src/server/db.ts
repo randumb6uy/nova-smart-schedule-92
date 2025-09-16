@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://nova-scheduler:bSde4QmoxVkwHJPo@cluster0.mongodb.net/nova-scheduler?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://tush1066_db_user:qwer1234@cluster1.gedgxgs.mongodb.net/nova-scheduler?retryWrites=true&w=majority';
 
 export const connectDB = async () => {
   try {
