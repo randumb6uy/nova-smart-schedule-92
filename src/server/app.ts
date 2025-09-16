@@ -5,8 +5,6 @@ import helmet from 'helmet';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 
-const MONGODB_URI = 'mongodb+srv://tush1066_db_user:qwer1234@cluster1.gedgxgs.mongodb.net/nova-scheduler?retryWrites=true&w=majority';
-
 // Initialize express
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -28,7 +26,9 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // Connect to MongoDB
-mongoose.connect(MONGODB_URI)
+import { connectDB } from './db';
+
+connectDB()
   .then(() => {
     console.log('Connected to MongoDB');
     
