@@ -20,6 +20,9 @@ COPY src/ ./src/
 # Build the application
 RUN npx tsc -p tsconfig.server.json
 
+# Verify the dist folder exists and contains the built files
+RUN ls -la dist/server/
+
 # Expose port
 EXPOSE 5000
 
