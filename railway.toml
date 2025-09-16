@@ -8,7 +8,6 @@ healthcheckPath = "/"
 healthcheckTimeout = 180
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 5
-restartPolicyType = "on_failure"
 
 [env]
 NODE_ENV = "production"
