@@ -5,14 +5,14 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copy package files
-COPY backend/package*.json ./
+COPY package*.json ./
 
-# Install dependencies
+# Install dependencies and TypeScript
 RUN npm install
+RUN npm install typescript @types/node ts-node --save
 
 # Copy source code
-COPY src/server ./src/server
-COPY tsconfig.server.json ./
+COPY . .
 
 # Build the application
 RUN npm run build

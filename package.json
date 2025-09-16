@@ -7,7 +7,7 @@
     "dev": "vite",
     "server": "cross-env NODE_ENV=development ts-node src/server/app.ts",
     "dev:all": "concurrently \"npm run server\" \"npm run dev\"",
-    "build": "tsc -p tsconfig.server.json",
+    "build": "./node_modules/.bin/tsc -p tsconfig.server.json",
     "start": "cross-env NODE_ENV=production node dist/server/app.js",
     "lint": "eslint .",
     "preview": "vite preview"
