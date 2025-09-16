@@ -4,18 +4,21 @@ FROM node:18-alpine
 # Create app directory
 WORKDIR /app
 
+# Install TypeScript globally
+RUN npm install -g typescript
+
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies and TypeScript
+# Install dependencies
 RUN npm install
-RUN npm install typescript @types/node ts-node --save
 
-# Copy source code
-COPY . .
+# Copy source code and config files
+COPY tsconfig.server.json ./
+COPY src/ ./src/
 
 # Build the application
-RUN npm run build
+RUN npx tsc -p tsconfig.server.json
 
 # Expose port
 EXPOSE 5000
